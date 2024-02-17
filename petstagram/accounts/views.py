@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def register_user(request):
@@ -7,20 +7,24 @@ def register_user(request):
 
 
 def signin_user(request):
-    pass
+    context = {}
+    return render(request, template_name="accounts/login-page.html", context=context)
 
 
 def signout_user(request):
-    pass
+    return redirect("home_page")
 
 
-def details_profile(request):
-    pass
+def details_profile(request, pk):
+    context = {}
+    return render(request, template_name="accounts/profile-details-page.html", context=context)
 
 
-def edit_profile(request):
-    pass
+def edit_profile(request, pk):
+    context = {}
+    return render(request, template_name="accounts/profile-edit-page.html", context=context)
 
 
-def delete_profile(request):
-    pass
+def delete_profile(request, pk):
+    context = {}
+    return render(request, template_name="accounts/profile-delete-page.html", context=context)

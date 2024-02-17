@@ -1,9 +1,11 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <!-- Starts Head Section -->
 <head>
-    <link rel="stylesheet" href="/staticfiles/css/styles.css">
-    <link rel="icon" type="image/x-icon" href="/staticfiles/images/free-30-instagram-stories-icons23_122570.png">
+    <link rel="stylesheet" href="{% static '/css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static '/images/free-30-instagram-stories-icons23_122570.png' %}">
     <title>Petstagram</title>
 </head>
 <!-- End Head Section -->
@@ -18,7 +20,7 @@
             <div class="logo">
                 <!-- Link to Home Page -->
                 <a href="#">
-                    <img width="50px" src="/staticfiles/images/free-30-instagram-stories-icons23_122570.png" alt="img1">
+                    <img width="50px" src="{% static '/images/free-30-instagram-stories-icons23_122570.png' %}" alt="img1">
                 </a>
 
                 <!-- Link to Home Page -->
@@ -83,11 +85,11 @@
                         <p>Sasho</p>
                         <!-- Pet Edit Button -->
                         <a href="">
-                            <img class="edit-img" src="/staticfiles/images/edit-pen-icon-6.jpg" alt="edit button">
+                            <img class="edit-img" src="{% static '/images/edit-pen-icon-6.jpg' %}" alt="edit button">
                         </a>
                         <!-- Pet Delete Button -->
                         <a href="">
-                            <img class="bin-img" src="/staticfiles/images/icon-remove-22.jpg" alt="bin button">
+                            <img class="bin-img" src="{% static '/images/icon-remove-22.jpg' %}" alt="bin button">
                         </a>
                     </div>
                     <div class="data">
@@ -113,7 +115,7 @@
                             <div class="profilepic">
                                 <div class="profile_img">
                                     <div class="image">
-                                        <img src="/staticfiles/images/person.png" alt="img8">
+                                        <img src="{% static '/images/person.png' %}" alt="img8">
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +136,7 @@
                 </div>
                 <!-- Post image -->
                 <div class="imgBx" id="place the id of the photo here">
-                    <img src="/staticfiles/images/axolotl.jpeg" alt="post" class="cover">
+                    <img src="{% static '/images/axolotl.jpeg' %}" alt="post" class="cover">
                 </div>
                 <!-- -->
 
@@ -204,7 +206,7 @@
                             <div class="profilepic">
                                 <div class="profile_img">
                                     <div class="image">
-                                        <img src="/staticfiles/images/person.png" alt="img8">
+                                        <img src="{% static '/images/person.png' %}" alt="img8">
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +292,7 @@
             <!-- IF Photos End Pet Photos Post Section -->
 
             <!-- IF NOT Photos Show No Post Image -->
-            <img class="no-posts" src="/staticfiles/images/no_posts.png" alt="no posts image">
+            <img class="no-posts" src="{% static '/images/no_posts.png' %}" alt="no posts image">
 
         </div>
     </div>

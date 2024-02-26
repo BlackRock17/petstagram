@@ -1,0 +1,73 @@
+{% load static %}
+
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <!-- Link to Home Page -->
+                <a href="{% url 'home_page' %}">
+                    <img width="50px" src="{% static '/images/free-30-instagram-stories-icons23_122570.png' %}" alt="img1">
+                </a>
+
+                <!-- Link to Home Page -->
+                <a class="home" href="{% url 'home_page' %}">
+                    <i>Petstagram</i>
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <ul class="nav-group">
+                    <li class="nav-item">
+
+                        <!-- Link to Add Pet Page -->
+                        <a href="{% url 'add_pet' %}">
+                            <i>Add Pet</i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+
+                        <!-- Link to Add Photo Page -->
+                        <a href="{% url 'add_photo' %}">
+                            <i>Add Photo</i>
+                        </a>
+                    </li>
+
+                    {% if not request.user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <!-- Link to Login Page -->
+                        <a href="{% url 'signin_user' %}">
+                            <i>Login</i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+
+                        <!-- Link to Register Page -->
+                        <a href="{% url 'register_user' %}">
+                            <i>Register</i>
+                        </a>
+                    </li>
+
+                    {% else %}
+
+                    <li class="nav-item">
+                        <!-- Link to Profile Page -->
+                        <a href="{% url 'details_profile' pk=2 %}">
+                            <i>Profile</i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+
+                        <!-- Lgn out -->
+                        <a href="{% url 'signout_user' %}">
+                            <i>Log out</i>
+                        </a>
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

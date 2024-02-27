@@ -40,7 +40,7 @@ class PetPhoto(models.Model):
         blank=True,
     )
 
-    tagged_pet = models.ManyToManyField(
+    tagged_pets = models.ManyToManyField(
         Pet,
         blank=True,
     )

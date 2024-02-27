@@ -11,4 +11,4 @@ class PetPhotoAdmin(admin.ModelAdmin):
         return obj.description[:15]
 
     def tagged_pets(self, obj):
-        return ", ".join(pet.name for pet in obj.pets.all())
+        return ", ".join(pet.name for pet in obj.tagged_pets.all())

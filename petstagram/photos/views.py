@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from petstagram.photos.models import PetPhoto
+
 
 def add_photo(request):
     context = {}
@@ -7,7 +9,9 @@ def add_photo(request):
 
 
 def details_photo(request, pk):
-    context = {}
+    context = {
+        "pet_photo": PetPhoto.objects.get(pk=pk)
+    }
     return render(request, template_name="photos/photo-details-page.html", context=context)
 
 

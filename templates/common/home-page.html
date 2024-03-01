@@ -6,11 +6,14 @@
         <div class="col-9">
 
             <!-- Start Searchbar Form -->
-            <form class="searchbar" method="post">
-                <input type="text" placeholder="Search by pet name...">
+            <form class="searchbar" action="{% url 'home_page' %}" method="get">
+
+                <input type="text" name="pet_name_pattern" placeholder="Search by pet name..." value="{{ pet_name_pattern }}">
+
                 <button>
                     <img src="{% static '/images/search.png' %}" height="18" alt="img2">
                 </button>
+
             </form>
 
             {% include 'partials/pet_photos_list.html'  with photo_list=pet_photos %}

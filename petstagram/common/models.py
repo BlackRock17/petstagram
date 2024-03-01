@@ -19,7 +19,7 @@ class PhotoComment(models.Model):
 
     to_photo = models.ForeignKey(
         PetPhoto,
-        on_delete=models.CASCADE,
+        on_delete=models.RESTRICT,
     )
 
 
@@ -27,5 +27,5 @@ class PhotoLike(models.Model):
 
     to_photo = models.ForeignKey(
         PetPhoto,
-        on_delete=models.CASCADE,
+        on_delete=models.RESTRICT,
     )

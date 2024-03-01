@@ -5,9 +5,19 @@ from petstagram.photos.models import PetPhoto
 
 
 def home_page(request):
+
+    pet_name_pattern = request.GET.get("pet_name_pattern", None)
+
+    pet_photos = PetPhoto.objects.all()
+
+    if pet_name_pattern:
+        pet_photos = pet_photos.filter(tagged_pets__name__icontains=pet_name_pattern)
+
     context = {
-        "pet_photos": PetPhoto.objects.all()
+        "pet_photos": pet_photos,
+        "pet_name_pattern": pet_name_pattern,
     }
+
     return render(request, template_name="common/home-page.html", context=context)
 
 

@@ -1,66 +1,79 @@
 from django.shortcuts import render, redirect
-
+from django.urls import reverse, reverse_lazy
+from django.views import generic as views
 from petstagram.pets.forms import PetCreateForm, PetEditForm, PetDeleteForm
 from petstagram.pets.models import Pet
 
 
-def add_pet(request):
+class PetCreateView(views.CreateView):
+    # model = Pet
+    template_name = "pets/pet-add-page.html"
+    form_class = PetCreateForm
 
-    pet_form = PetCreateForm(request.POST or None)
+    def get_success_url(self):
+        return reverse("details_pet", kwargs={
+            "username": "lyubo",
+            "pet_slug": self.object.slug,
+        })
 
-    if request.method == "POST":
-        if pet_form.is_valid():
-            created_pet = pet_form.save()
-            return redirect("details_pet", username="lyubo", pet_slug=created_pet.slug)
 
-    context = {
-        "pet_form": pet_form,
+class PetDetailView(views.DetailView):
+    model = Pet
+    template_name = "pets/pet-details-page.html"
+    slug_url_kwarg = "pet_slug"
+
+
+class PetEditView(views.UpdateView):
+    model = Pet
+    form_class = PetEditForm
+    template_name = "pets/pet-edit-page.html"
+    slug_url_kwarg = "pet_slug"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["username"] = "lyubo"
+        return context
+
+    def get_success_url(self):
+        return reverse("details_pet", kwargs={
+            "username": self.request.GET.get("username"),
+            "pet_slug": self.object.slug,
+        })
+
+
+# def delete_pet(request, username, pet_slug):
+#
+#     pet = Pet.objects.filter(slug=pet_slug).get()
+#     form = PetDeleteForm(request.POST or None, instance=pet)
+#
+#     if request.method == "POST":
+#         form.save()
+#         return redirect("home_page")
+#
+#     context = {
+#         "pet_form": form,
+#         "username": username,
+#         "pet": pet,
+#     }
+#
+#     return render(request, template_name="pets/pet-delete-page.html", context=context)
+
+class PetDeleteView(views.DeleteView):
+    model = Pet
+    template_name = "pets/pet-delete-page.html"
+    form_class = PetDeleteForm
+    success_url = reverse_lazy("home_page")
+    slug_url_kwarg = "pet_slug"
+
+    extra_context = {
+        "username": "lyubo",
     }
 
-    return render(request, template_name="pets/pet-add-page.html", context=context)
+    def get_context_data(self, **kwargs):
 
+        context = super().get_context_data(**kwargs)
 
-def details_pet(request, username, pet_slug):
+        form = self.form_class(instance=self.object)
 
-    context = {
-        'pet': Pet.objects.get(slug=pet_slug)
-    }
-
-    return render(request, template_name="pets/pet-details-page.html", context=context)
-
-
-def edit_pet(request, username, pet_slug):
-
-    pet = Pet.objects.filter(slug=pet_slug).get()
-    form = PetEditForm(request.POST or None, instance=pet)
-
-    if request.method == "POST":
-        if form.is_valid():
-            form.save()
-            return redirect("details_pet", username=username, pet_slug=pet_slug)
-
-    context = {
-        "pet_form": form,
-        "username": username,
-        "pet": pet,
-    }
-
-    return render(request, template_name="pets/pet-edit-page.html", context=context)
-
-
-def delete_pet(request, username, pet_slug):
-
-    pet = Pet.objects.filter(slug=pet_slug).get()
-    form = PetDeleteForm(request.POST or None, instance=pet)
-
-    if request.method == "POST":
-        form.save()
-        return redirect("home_page")
-
-    context = {
-        "pet_form": form,
-        "username": username,
-        "pet": pet,
-    }
-
-    return render(request, template_name="pets/pet-delete-page.html", context=context)
+        return context

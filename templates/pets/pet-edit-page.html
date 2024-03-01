@@ -6,8 +6,8 @@
     <div class="edit-delete edit-photo">
         <h2>Edit Pet</h2>
         <!-- Start Edit Pet From -->
-        <form action="{% url 'edit_pet' username=username pet_slug=pet.slug %}" method="post">
-            {{ pet_form.as_p }}
+        <form action="{% url 'edit_pet' username=username pet_slug=object.slug %}" method="post">
+            {{ form.as_p }}
             <!-- Edit Pet Button -->
             <button class="edit-btn" type="submit">Edit</button>
 

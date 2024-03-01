@@ -17,19 +17,19 @@
                 <div class="personal">
                     <div class="edit">
                         <!-- Pet Name -->
-                        <p>{{ pet.name }}</p>
+                        <p>{{ object.name }}</p>
                         <!-- Pet Edit Button -->
-                        <a href="{% url 'edit_pet' username='lyubo' pet_slug=pet.slug %}">
+                        <a href="{% url 'edit_pet' username='lyubo' pet_slug=object.slug %}">
                             <img class="edit-img" src="{% static '/images/edit-pen-icon-6.jpg' %}" alt="edit button">
                         </a>
                         <!-- Pet Delete Button -->
-                        <a href="{% url 'delete_pet' username='lyubo' pet_slug=pet.slug %}">
+                        <a href="{% url 'delete_pet' username='lyubo' pet_slug=object.slug %}">
                             <img class="bin-img" src="{% static '/images/icon-remove-22.jpg' %}" alt="bin button">
                         </a>
                     </div>
                     <div class="data">
                         <!-- Pet Total Photos -->
-                        <span>{{ pet.petphoto_set.count }}</span>
+                        <span>{{ object.petphoto_set.count }}</span>
                         <p>photos</p>
                     </div>
                 </div>

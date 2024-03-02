@@ -18,7 +18,12 @@ class PetCreateView(views.CreateView):
 
 
 class PetDetailView(views.DetailView):
-    model = Pet
+
+    queryset = Pet.objects.all() \
+        .prefetch_related("petphoto_set") \
+        .prefetch_related("petphoto_set__photolike_set") \
+        .prefetch_related("petphoto_set__tagged_pets")
+
     template_name = "pets/pet-details-page.html"
     slug_url_kwarg = "pet_slug"
 
@@ -70,10 +75,18 @@ class PetDeleteView(views.DeleteView):
         "username": "lyubo",
     }
 
-    def get_context_data(self, **kwargs):
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["instance"] = self.object
+        return kwargs
 
-        context = super().get_context_data(**kwargs)
-
-        form = self.form_class(instance=self.object)
-
-        return context
+    # THE SAME SOLUTION LIKE get_form_kwargs
+    # def get_context_data(self, **kwargs):
+    #
+    #     context = super().get_context_data(**kwargs)
+    #
+    #     form = self.form_class(instance=self.object)
+    #
+    #     context["form"] = form
+    #
+    #     return context

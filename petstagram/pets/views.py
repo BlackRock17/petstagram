@@ -3,9 +3,10 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic as views
 from petstagram.pets.forms import PetCreateForm, PetEditForm, PetDeleteForm
 from petstagram.pets.models import Pet
+from django.contrib.auth import mixins as auth_mixin
 
 
-class PetCreateView(views.CreateView):
+class PetCreateView(auth_mixin.LoginRequiredMixin, views.CreateView):
     # model = Pet
     template_name = "pets/pet-add-page.html"
     form_class = PetCreateForm
@@ -16,8 +17,19 @@ class PetCreateView(views.CreateView):
             "pet_slug": self.object.slug,
         })
 
+    # def form_valid(self, form):
+    #     instance = form.save(commit=False)
+    #     instance.user = self.request.user
+    #     return super().form_valid(form)
 
-class PetDetailView(views.DetailView):
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class=form_class)
+
+        form.instance.user = self.request.user
+        return form
+
+
+class PetDetailView(auth_mixin.LoginRequiredMixin, views.DetailView):
 
     queryset = Pet.objects.all() \
         .prefetch_related("petphoto_set") \
@@ -28,7 +40,7 @@ class PetDetailView(views.DetailView):
     slug_url_kwarg = "pet_slug"
 
 
-class PetEditView(views.UpdateView):
+class PetEditView(auth_mixin.LoginRequiredMixin, views.UpdateView):
     model = Pet
     form_class = PetEditForm
     template_name = "pets/pet-edit-page.html"
@@ -64,7 +76,7 @@ class PetEditView(views.UpdateView):
 #
 #     return render(request, template_name="pets/pet-delete-page.html", context=context)
 
-class PetDeleteView(views.DeleteView):
+class PetDeleteView(auth_mixin.LoginRequiredMixin, views.DeleteView):
     model = Pet
     template_name = "pets/pet-delete-page.html"
     form_class = PetDeleteForm

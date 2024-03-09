@@ -1,7 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator, BaseValidator
 from django.db import models
 
 from petstagram.pets.models import Pet
+UserModel = get_user_model()
 
 
 class MaxFileSizeValidator(BaseValidator):
@@ -40,11 +42,14 @@ class PetPhoto(models.Model):
         blank=True,
     )
 
+    date_of_publication = models.DateField(
+        auto_now=True,
+    )
+
     tagged_pets = models.ManyToManyField(
         Pet,
         blank=True,
     )
 
-    date_of_publication = models.DateField(
-        auto_now=True,
-    )
+    user = models.ForeignKey(UserModel,
+                             on_delete=models.RESTRICT)

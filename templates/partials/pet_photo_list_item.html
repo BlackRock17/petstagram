@@ -17,7 +17,7 @@
                 </a>
                 <h3>
                     <!-- Link to User Profile Page -->
-                    <a href="{% url 'details_profile' pk=1 %}">
+                    <a href="{% url 'details_profile' pk=request.user.pk %}">
                         <!-- if user has first name and last name -->
                         lyubo
                         <!-- else -->

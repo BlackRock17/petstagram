@@ -9,3 +9,9 @@ class PetstagramUserCreationForm(auth_forms.UserCreationForm):
     class Meta(auth_forms.UserCreationForm.Meta):
         model = UserModel
         fields = ("email",)
+
+
+class PetstagramChangeForm(auth_forms.UserChangeForm):
+
+    class Meta(auth_forms.UserChangeForm.Meta):
+        model = UserModel

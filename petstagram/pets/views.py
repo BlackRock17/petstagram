@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views import generic as views
+
+from petstagram.core.view_mixins import OwnerRequiredMixin
 from petstagram.pets.forms import PetCreateForm, PetEditForm, PetDeleteForm
 from petstagram.pets.models import Pet
 from django.contrib.auth import mixins as auth_mixin
@@ -40,7 +41,7 @@ class PetDetailView(auth_mixin.LoginRequiredMixin, views.DetailView):
     slug_url_kwarg = "pet_slug"
 
 
-class PetEditView(auth_mixin.LoginRequiredMixin, views.UpdateView):
+class PetEditView(OwnerRequiredMixin, auth_mixin.LoginRequiredMixin, views.UpdateView):
     model = Pet
     form_class = PetEditForm
     template_name = "pets/pet-edit-page.html"
@@ -76,7 +77,7 @@ class PetEditView(auth_mixin.LoginRequiredMixin, views.UpdateView):
 #
 #     return render(request, template_name="pets/pet-delete-page.html", context=context)
 
-class PetDeleteView(auth_mixin.LoginRequiredMixin, views.DeleteView):
+class PetDeleteView(OwnerRequiredMixin, auth_mixin.LoginRequiredMixin, views.DeleteView):
     model = Pet
     template_name = "pets/pet-delete-page.html"
     form_class = PetDeleteForm

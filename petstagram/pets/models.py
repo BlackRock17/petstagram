@@ -1,10 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.text import slugify
+
+from petstagram.core.models import IHaveUser
+
 UserModel = get_user_model()
 
 
-class Pet(models.Model):
+class Pet(IHaveUser, models.Model):
     MAX_NAME_LENGTH = 30
 
     name = models.CharField(
@@ -30,8 +33,8 @@ class Pet(models.Model):
         editable=False,
     )
 
-    user = models.ForeignKey(UserModel,
-                             on_delete=models.RESTRICT)
+    # user = models.ForeignKey(UserModel,
+    #                          on_delete=models.RESTRICT)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixin
 
+from petstagram.core.view_mixins import OwnerRequiredMixin
 from petstagram.photos.forms import PetPhotoCreateForm, PetPhotoEditForm
 from petstagram.photos.models import PetPhoto
 
@@ -33,7 +34,7 @@ class PetPhotoDetailsView(auth_mixin.LoginRequiredMixin, views.DetailView):
     template_name = "photos/photo-details-page.html"
 
 
-class PetPhotoEditView(auth_mixin.LoginRequiredMixin, views.UpdateView):
+class PetPhotoEditView(OwnerRequiredMixin, auth_mixin.LoginRequiredMixin, views.UpdateView):
     queryset = PetPhoto.objects.all() \
         .prefetch_related("tagged_pets")
 
